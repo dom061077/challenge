@@ -1,3 +1,5 @@
+
+
 Ext.define('Challenge.controller.PurchaseOrderFormController',{
     extend: 'Ext.app.Controller',
     views: ['PurchaseOrderFormView'],
@@ -9,13 +11,13 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
                 afterrender: this.initView
 
             },
-            'purchaseorderformview button[action = "cancel"]': {
+            'purchaseorderformview #cancel': {
                 click: this.onCancel
             },
-            'purchaseorderformview button[action = "reset"]': {
+            'purchaseorderformview #reset': {
                 click: this.onReset
             },
-            'purchaseorderformview button[action = "save"]': {
+            'purchaseorderformview #save': {
                 click: this.onSave
             }                        
             /*
@@ -27,6 +29,7 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
         );
     },
     initView: function(view){
+
         var currencyStore = this.getCurrencyStoreStore();
         var currencyCmb = view.down('#currencyCmb');
         currencyCmb.bindStore(currencyStore);
@@ -40,19 +43,64 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
         });
         
     },
+    isDirty: function(changes,oldRecord){
+        var dirty=false;
+        if(changes.Date){
+            if(changes.Date!= oldRecord.get('Date'))
+                dirty=true;
+        }
+        if(changes.ClientId){
+            dirty=true;
+        }
+        if(changes.Status){
+            dirty=true;
+        }        
+        if(changes.Total){
+            dirty=true;
+        }      
+        if(changes.Currency){
+            dirty=true;
+        }                
+        return dirty;
+    },
     onCancel: function(btn){
+        var view = btn.up('purchaseorderformview');
         var win = btn.up('purchaseorderformview').up('window');
-        win.close();
+        var record = view.getForm().getRecord();
+        view.getForm().updateRecord(record);   
+        console.log('Is dirty: ',record.getChanges());     
+        if(this.isDirty(record.getChanges(),view.oldRecord)){
+            Ext.MessageBox.show({
+                title: 'Warning',
+                msg: 'There are changes to save. Are you sure to leave?',
+                buttons: Ext.MessageBox.YESNO,
+                icon: Ext.MessageBox.QUESTION,
+                fn: function(btn){
+                    if(btn=='yes'){
+                        record.reject();
+                        win.close();
+                    }
+                }
+            });
+        }else{
+            win.close();
+        }
     },
     onReset: function(btn){
         var view = btn.up('purchaseorderformview');
-        view.loadRecord(view.record);
+        var record = view.getForm().getRecord();
+        view.getForm().updateRecord(record);
+        record.reject();
     },
     onSave: function(btn){
         var view = btn.up('purchaseorderformview');
+        var record = view.getForm().getRecord();
+        view.getForm().updateRecord(record);        
         //el API REST no soporta POST ni PUT
+
         Ext.MessageBox.show({
             title:'Message',
+            icon: Ext.MessageBox.WARNING,   
             msg:'Record saved',
             fn: function(btn){
                 view.up('window').close();
@@ -67,3 +115,43 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
 
     }*/
 });
+
+/*
+
+
+// Sample JSON string
+var jsonString = '[{"id": 1, "name": "John Doe"}, {"id": 2, "name": "Jane Doe"}]';
+
+// Convert JSON string to a JavaScript array
+var jsonData = Ext.decode(jsonString);
+
+// Define a model for the store
+Ext.define('User', {
+    extend: 'Ext.data.Model',
+    fields: ['id', 'name']
+});
+
+// Create a store
+var store = Ext.create('Ext.data.Store', {
+    model: 'User'
+});
+
+// Load the data into the store
+store.loadData(jsonData);
+
+// Verify the store content (For debugging purpose)
+console.log(store.getData().items);
+
+// Use the store in a grid or other component
+Ext.create('Ext.grid.Panel', {
+    title: 'Users',
+    store: store,
+    columns: [
+        { text: 'ID', dataIndex: 'id' },
+        { text: 'Name', dataIndex: 'name' }
+    ],
+    renderTo: Ext.getBody()
+});
+
+
+*/

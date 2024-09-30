@@ -27,7 +27,8 @@ Ext.define('Challenge.controller.PurchaseOrderController',{
     }*/
    OnDblClick: function( grid, record, item, index, e, eOpts ){
     var form = Ext.widget('purchaseorderformview',{
-        record: record
+        record: record,
+        oldRecord: record
     });
      var win = Ext.widget('window',{
         //layout: 'fit',

@@ -22,9 +22,15 @@ Ext.define('Challenge.view.PurchaseOrderView',{
             dataIndex: 'Id',
             sortable: true
         },{
-            //xtype: 'datecolumn',
+            xtype: 'gridcolumn',
             header: 'Date',
-            format:'d/m/Y',
+            //format:'d/m/Y',
+            renderer : function(value, object, record) {
+
+            	    return Ext.Date.format(value,'d/m/Y') ;
+
+               
+			},
             dataIndex: 'Date',
             sortable: true
 
@@ -34,7 +40,7 @@ Ext.define('Challenge.view.PurchaseOrderView',{
             dataIndex: 'Status',
             sortable:true
         },{
-           // xtype: 'numbercolumn',
+            xtype: 'numbercolumn',
             align: 'right',
             header: 'Total',
             format: '0,000.00',

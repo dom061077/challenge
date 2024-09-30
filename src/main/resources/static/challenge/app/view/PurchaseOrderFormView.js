@@ -1,3 +1,5 @@
+
+
 Ext.define('Challenge.view.PurchaseOrderFormView',{
 extend: 'Ext.form.Panel',
 alias: [ 'widget.purchaseorderformview' ],
@@ -27,6 +29,7 @@ items:[
                xtype: 'datefield',
                 name: 'Date',
                 format:'d/m/Y',
+
                 fieldLabel: 'Date',
                 allowBlank: 'false'
             },{
@@ -92,13 +95,13 @@ items:[
 buttons:[
     {
         text: 'Save',
-        action: 'save'
+        itemId: 'save'
     },{
         text: 'Reset',
-        action: 'reset'
+        itemId: 'reset'
     },{
         text: 'Cancel',
-        action: 'cancel'
+        itemId: 'cancel'
     }
 ],
 initComponent: function() {
