@@ -91,6 +91,7 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
         var record = view.getForm().getRecord();
         view.getForm().updateRecord(record);
         record.reject();
+        view.loadRecord(record);
     },
     onSave: function(btn){
         var view = btn.up('purchaseorderformview');
