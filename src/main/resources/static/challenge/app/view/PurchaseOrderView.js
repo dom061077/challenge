@@ -17,25 +17,22 @@ Ext.define('Challenge.view.PurchaseOrderView',{
     //autoHeight : true,
     columns : [
         {
-            //xtype: 'gridcolumn',
+            xtype: 'gridcolumn',
             header: 'Id',
             dataIndex: 'Id',
             sortable: true
         },{
-            xtype: 'gridcolumn',
+            xtype: 'datecolumn',
             header: 'Date',
-            //format:'d/m/Y',
-            renderer : function(value, object, record) {
-
-            	    return Ext.Date.format(value,'d/m/Y') ;
-
-               
-			},
+            format:'d/m/Y',
+            renderer: function (value, obj, record) {
+                return value ? Ext.Date.format(new Date(value), 'd/m/Y') : ''
+            },
             dataIndex: 'Date',
             sortable: true
 
         },{
-           // xtype: 'gridcolumn',
+            xtype: 'gridcolumn',
             header: 'Status',
             dataIndex: 'Status',
             sortable:true

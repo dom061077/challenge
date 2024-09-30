@@ -7,7 +7,8 @@ Ext.define('Challenge.model.PurchaseOrderModel',{
             type: 'int'
         },{
             name: 'Date',
-            type: 'string'
+            type: 'date',
+            //dateFormat: 'MS',
         },{
             name: 'ClientId',
             type: 'int',

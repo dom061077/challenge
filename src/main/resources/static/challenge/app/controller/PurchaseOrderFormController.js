@@ -69,7 +69,7 @@ Ext.define('Challenge.controller.PurchaseOrderFormController',{
         var record = view.getForm().getRecord();
         view.getForm().updateRecord(record);   
         console.log('Is dirty: ',record.getChanges());     
-        if(this.isDirty(record.getChanges(),view.oldRecord)){
+        if(record.dirty){
             Ext.MessageBox.show({
                 title: 'Warning',
                 msg: 'There are changes to save. Are you sure to leave?',
